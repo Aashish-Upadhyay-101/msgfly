@@ -1,0 +1,52 @@
+from email.policy import default
+from statistics import mode
+import uuid
+from wsgiref.validate import validator
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _ 
+from django.core.validators import EmailValidator
+from .manager import UserManager
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    pkid = models.BigAutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4(), unique=True, editable=False)
+    username = models.CharField(verbose_name=_("Username"), max_length=50, unique=True)
+    first_name = models.CharField(verbose_name=_("First name"), max_length=25)
+    last_name = models.CharField(verbose_name=_("Last name"), max_length=25)
+    email = models.EmailField(verbose_name=_("Email"), max_length=50, unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    date_joined =  models.DateTimeField(default=timezone.now)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username", "first_name", "last_name"]
+
+    objects = UserManager()
+
+
+    class Meta:
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")
+    
+
+    def __str__(self):
+        return self.username 
+
+    @property
+    def get_username(self):
+        return self.username 
+
+    @property 
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+
+
+
+
+
+
