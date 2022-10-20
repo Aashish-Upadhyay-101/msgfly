@@ -8,7 +8,7 @@ from .manager import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     pkid = models.BigAutoField(primary_key=True, editable=False)
-    id = models.UUIDField(default=uuid.uuid4(), unique=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     username = models.CharField(verbose_name=_("Username"), max_length=50, unique=True)
     first_name = models.CharField(verbose_name=_("First name"), max_length=25)
     last_name = models.CharField(verbose_name=_("Last name"), max_length=25)
