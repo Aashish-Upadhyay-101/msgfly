@@ -7,6 +7,16 @@ from .serializers import UserRegisterSerializer, UserLoginSerializer
 
 
 class RegisterUserAPIView(APIView):
+    """
+    Register and create a new User.
+    
+    ### Along with **POST** request
+        username: string
+        first_name: string
+        last_name: string
+        password: string
+        password2: string
+    """
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -16,6 +26,13 @@ class RegisterUserAPIView(APIView):
 
 
 class LoginUserAPIView(APIView):
+    """
+    Login User.
+    
+    ### Along with **POST** request
+        email: string 
+        password: string
+    """
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
@@ -31,6 +48,9 @@ class LoginUserAPIView(APIView):
 
 @api_view(['POST'])
 def logout_view(request):
+    """
+    Logout User.
+    """
     logout(request)
     return Response("Logout !")
 
