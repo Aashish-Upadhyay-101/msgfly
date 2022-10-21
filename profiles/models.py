@@ -23,7 +23,9 @@ class Profile(models.Model):
     class Meta:
         verbose_name = "Profile"
         verbose_name_plural = "Profiles"
-
+        
+    def __str__(self):
+        return self.user.username
 
 @receiver(post_save, sender=AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -33,3 +35,5 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=AUTH_USER_MODEL)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
