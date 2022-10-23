@@ -34,6 +34,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'channels',
+    
+
     'corsheaders',
     'drf_yasg',
 
@@ -82,6 +86,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'msgfly.wsgi.application'
+ASGI_APPLICATION = 'msgfly.asgi.application'
 
 
 # Database
