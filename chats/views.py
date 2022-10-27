@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from .models import Chat, Inbox
+
+
+# rest api now !! 
 
 
 def index(request):

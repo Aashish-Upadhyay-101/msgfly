@@ -1,5 +1,6 @@
 import json
 
+from django.core.exceptions import ValidationError
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .exceptions import LoginRequiredException
@@ -41,10 +42,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     def create_inbox(self):
         return Inbox.objects.get_or_create(sender=self.sender_user, receiver=self.receiver_user)
+        
 
-    
-    def get_all_messages(self):
-        return Chat.objects.filter(inbox=self.inbox).order_by("created_at")
+    def create_chat(self, inbox, message):
+        return Chat.objects.create(inbox=inbox, message=message)
 
 
     async def disconnect(self, close_code):
@@ -62,13 +63,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name, {"type": "chat_message", "message": message}
         )
 
+        # save message to database
+        await database_sync_to_async(self.create_chat)(self.inbox, message)
+
 
     # Receive message from room group
     async def chat_message(self, event):
         message = event["message"]
 
-        # Send message to WebSocket
         await self.send(text_data=json.dumps({"message": message}))
 
-
-            
+        
