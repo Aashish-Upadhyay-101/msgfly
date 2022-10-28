@@ -1,5 +1,6 @@
 import json
 
+from django.db.models import Q
 from django.core.exceptions import ValidationError
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
@@ -23,10 +24,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.sender_user = await database_sync_to_async(self.get_user)(self.sender_id)
         self.receiver_user = await database_sync_to_async(self.get_user)(self.receiver_id)
 
-        # get or create inbox
-        inbox, created = await database_sync_to_async(self.create_inbox)()
-        self.inbox = inbox 
-
         # channel room group name
         self.room_group_name = f"{self.sender_id}-{self.receiver_id}"
         
@@ -40,8 +37,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return User.objects.get(id=id)
 
 
+    # only create one inbox for both sender and receiver and vice versa
     def create_inbox(self):
-        return Inbox.objects.get_or_create(sender=self.sender_user, receiver=self.receiver_user)
+        try:
+            inbox = Inbox.objects.get()
+        except Inbox.DoesNotExist:
+            inbox = Inbox.objects.create(sender=self.sender_user, receiver=self.receiver_user)
+        return inbox
         
 
     def create_chat(self, inbox, message):
@@ -62,6 +64,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name, {"type": "chat_message", "message": message}
         )
+
+         # get or create inbox
+        inbox, created = await database_sync_to_async(self.create_inbox)()
+        self.inbox = inbox 
 
         # save message to database
         await database_sync_to_async(self.create_chat)(self.inbox, message)
