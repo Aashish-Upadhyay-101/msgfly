@@ -40,10 +40,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # only create one inbox for both sender and receiver and vice versa
     def create_inbox(self):
         try:
-            inbox = Inbox.objects.get()
+            return Inbox.objects.get(Q(Q(sender=self.sender_user) & Q(receiver=self.receiver_user)) | Q(Q(sender=self.receiver_user) & Q(receiver=self.sender_user)))
         except Inbox.DoesNotExist:
-            inbox = Inbox.objects.create(sender=self.sender_user, receiver=self.receiver_user)
-        return inbox
+            return Inbox.objects.create(sender=self.sender_user, receiver=self.receiver_user)
+        
         
 
     def create_chat(self, inbox, message):
@@ -66,7 +66,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
          # get or create inbox
-        inbox, created = await database_sync_to_async(self.create_inbox)()
+        inbox = await database_sync_to_async(self.create_inbox)()
         self.inbox = inbox 
 
         # save message to database

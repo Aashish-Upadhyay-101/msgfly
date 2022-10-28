@@ -18,4 +18,6 @@ class AllChatAPIView(ListAPIView):
     queryset = Chat.objects.all().order_by("created_at")
     serializer_class = ChatSerializer
     lookup_field = 'id'
+
+
     
