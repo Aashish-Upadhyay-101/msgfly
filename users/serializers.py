@@ -1,6 +1,14 @@
+from dataclasses import fields
 from rest_framework import serializers
 from .models import User
 from .exceptions import UserNotFoundException
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ["username", "first_name", "last_name", "email"]
+
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input-type": "password"})
@@ -39,3 +47,4 @@ class UserLoginSerializer(serializers.ModelSerializer):
             raise UserNotFoundException
         
         return attrs
+
