@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from .models import Chat, Inbox
 from .serializers import ChatSerializer
+from django.contrib.auth import get_user_model
+from django.db.models import Q
+from .serializers import ChatSerializer
 
-# template
+User = get_user_model()
+
+# template  
 def index(request):
     return render(request, "chats/index.html")
 
@@ -20,4 +26,17 @@ class AllChatAPIView(ListAPIView):
     lookup_field = 'id'
 
 
-    
+class InboxChatAPIView(APIView):
+    """
+    return all the chat between two users
+    """
+    def get(self, request, inbox_id):
+        inbox = Inbox.objects.get(pk=inbox_id)
+        chats = Chat.objects.filter(inbox=inbox)
+        serializer = ChatSerializer(chats, many=True)
+        return Response ({"message": serializer.data}, status=status.HTTP_200_OK)
+
+        
+
+
+
