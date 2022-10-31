@@ -9,4 +9,4 @@
     - user authentication
     - profiles
     - messages
-    - chatting
+    - chating
