@@ -10,3 +10,4 @@
     - profiles
     - messages
     - chating
+    - react frontend
