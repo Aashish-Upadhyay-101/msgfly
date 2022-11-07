@@ -3,7 +3,7 @@ import React from "react";
 const Signup = () => {
   return (
     <div className="login">
-      <h1 style={{ marginTop: "6rem" }}>Signup</h1>
+      <h1 style={{ marginTop: "-6rem" }}>Signup</h1>
       <label for="firstname">First name</label>
       <input id="firstname" type="text" placeholder="first name" />
 
@@ -26,7 +26,7 @@ const Signup = () => {
         placeholder="your password (again)"
       />
 
-      <button style={{ marginBottom: "3rem" }} className="btn btn-main">
+      <button style={{ marginBottom: "rem" }} className="btn btn-main">
         Signup
       </button>
     </div>

@@ -26,9 +26,117 @@ code {
   align-items: center;
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 44px;
+  background-color: rgba(153, 153, 153, 0.169);
+}
+
+.sidebar {
+  width: 20rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.157);
+  height: 100vh;
+  overflow: scroll;
+}
+
+.side-chat-area {
+  display: flex;
+  gap: 24px;
+}
+
+.chat-area {
+  width: 100%;
+}
+
+.chat-area > h2 {
+  margin: 14px;
+}
+
+.user-inbox {
+  margin: 12px 8px 32px 8px;
+}
+
+.chat-head {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.307);
+  margin: 5px 0px;
+  width: 100%;
+  padding-bottom: 5px;
+}
+
+.chat-area {
+  margin-top: 10px;
+}
+
+.chatbox {
+  height: 100%;
+  width: 100%;
+}
+
+.message-area {
+  height: 75%;
+  border: 1px solid rgba(0, 0, 0, 0.105);
+  border-radius: 12px;
+  margin: 5px 16px 5px 0;
+  padding: 16px 14px 5px 14px;
+  overflow: scroll;
+}
+
+.message-area > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sender {
+  align-self: flex-start;
+  gap: 6px;
+  background-color: rgba(1, 1, 1, 0.088);
+  padding: 8px 10px;
+  width: 45%;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.receiver {
+  align-self: flex-end;
+  gap: 6px;
+  background-color: rgba(255, 0, 0, 0.236);
+  padding: 8px 10px;
+  width: 45%;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.sender > h4 {
+  font-size: 18px;
+}
+
+.send-message {
+  width: 90%;
+  display: flex;
+  gap: 12px;
+}
+
+.send-message > input {
+  width: 100%;
+  height: 48px;
+}
+
+.send-btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid black;
+  font-size: 16px;
+  font-weight: bolder;
+  height: 48px;
+}
+
 .login {
   display: flex;
   flex-direction: column;
+  width: 40rem;
+  margin: 10rem auto;
 }
 
 h1 {
@@ -41,7 +149,7 @@ label {
 
 input {
   height: 2.4rem;
-  width: 20rem;
+  /* width: 20rem; */
   margin-bottom: 2rem;
   border: 1px solid black;
   border-radius: 12px;
