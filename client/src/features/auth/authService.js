@@ -1,8 +1,8 @@
 import axios from "axios";
 
-LOGIN_URL = "http://127.0.0.1:8000/api/v1/auth/login/";
-LOGOUT_URL = "http://127.0.0.1:8000/api/v1/auth/logout/";
-REGISTER_URL = "http://127.0.0.1:8000/api/v1/auth/register/";
+const LOGIN_URL = "http://127.0.0.1:8000/api/v1/auth/login/";
+const LOGOUT_URL = "http://127.0.0.1:8000/api/v1/auth/logout/";
+const REGISTER_URL = "http://127.0.0.1:8000/api/v1/auth/register/";
 
 const register = async (userData) => {
   const config = {

@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import UserRegisterSerializer, UserLoginSerializer
+from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
 
 
 class RegisterUserAPIView(APIView):
@@ -38,11 +38,12 @@ class LoginUserAPIView(APIView):
         if serializer.is_valid():
             email = serializer.data.get("email")
             password = serializer.data.get("password")
+            print(email, password) # testing
             user = authenticate(email=email, password=password)
-            print(user)
             if user is not None:
                 login(request, user)
-                return Response({"status": "OK", "message": "Login success!"}, status=status.HTTP_200_OK)
+                userSerializer = UserSerializer(user, many=False)
+                return Response({"status": "OK", "message": "Login success!", "user": userSerializer.data}, status=status.HTTP_200_OK)
         return Response({"status": "NO", "message": "Incorrect Password!"}, status=status.HTTP_400_BAD_REQUEST)
             
 
